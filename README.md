@@ -1,6 +1,6 @@
 # Session Handoff
 
-Built by [Andy Toizer](https://www.linkedin.com/in/andy-toizer/) — I write [Agent Operator](https://agentoperator.substack.com), a newsletter about what it actually looks like to build real systems with coding agents as a non-engineer.
+Built by [Andy Toizer](https://www.linkedin.com/in/andy-toizer/) — I'm the head of growth at [Freckle.io](https://freckle.io) and write [Agent Operator](https://agentoperator.substack.com), a newsletter about what it actually looks like to build real systems with coding agents as a non-engineer.
 
 **TLDR:** A Claude Code skill that splits big projects into focused sessions, keeps a persistent README as the source of truth, and generates clean handoff context so the next session picks up exactly where you left off.
 
