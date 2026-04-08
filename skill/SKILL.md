@@ -1,6 +1,6 @@
 ---
 name: session-handoff
-description: "Manage multi-session projects by splitting big tasks into focused sessions, maintaining a persistent project README, and generating clean handoff context for the next session. Use this skill whenever: the user starts a large multi-step project, the user says 'let's split this up', you notice context is getting long on a complex task, you're approaching the end of a session with ongoing work, or the user asks to wrap up and continue later. Also trigger when you recognize a project will clearly need more than one session to complete — don't wait to be asked."
+description: "Manage multi-session projects by splitting big tasks into focused sessions, maintaining a persistent project README, and generating clean handoff context for the next session. PROACTIVELY USE THIS SKILL — do not wait for the user to ask. Trigger it when: (1) the user describes a project with 3+ distinct phases or steps, (2) the task involves building something that will take multiple rounds of work (campaigns, pipelines, migrations, refactors, multi-file features), (3) you estimate the work will fill more than ~60% of a context window, (4) the user mentions anything like 'let's split this up', 'we'll continue later', 'next session', 'wrap up', 'pick this up tomorrow', 'save my progress', (5) you're deep into a session and realize the remaining work should be a fresh session, (6) the user starts a new session and references work from a previous conversation. The user may not know the project is big until they describe it — YOU should recognize it and propose the session structure. Err on the side of using this skill. A project that turns out to be smaller than expected loses nothing from having a README; a project that turns out bigger than expected loses everything without one."
 ---
 
 # Session Handoff
@@ -11,11 +11,24 @@ The core problem: when a big project spans multiple Claude sessions, each new se
 
 ## When to activate
 
-Activate this skill in two situations:
+You should be the one to recognize that a project needs session management — the user won't always know upfront. Watch for these signals:
 
-1. **Project planning** — When the user brings a task that will clearly take more than one session (multi-phase projects, large-scope work, anything with 3+ distinct phases). Proactively propose splitting into sessions. Don't wait for them to ask.
+**During project planning:**
+- The user describes something with 3+ phases (e.g., "build a list, then find people, then write emails")
+- The task involves multiple tools, data sources, or sequential steps that build on each other
+- You estimate the full scope would fill more than half a context window
+- The task sounds like it'll take more than ~30 minutes of back-and-forth
 
-2. **Session wrap-up** — When you're nearing the end of a session with ongoing work. This could be because: you've completed the current phase, the context window is getting long, the user says they're done for now, or you recognize it's a natural stopping point.
+**During execution:**
+- You've been working for a while and realize there's still a lot left
+- You're about to start a new phase that would benefit from a fresh context
+- The user says anything about continuing later, wrapping up, or picking up next time
+
+**At session start:**
+- The user references previous work ("remember that campaign we were building?")
+- Look for a project README in likely directories before asking the user to re-explain
+
+When in doubt, activate. The cost of creating a README for a project that didn't need one is near zero. The cost of NOT having one when you needed it is re-doing hours of work.
 
 ## How it works
 
