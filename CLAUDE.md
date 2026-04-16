@@ -1,4 +1,4 @@
-# Session Handoff & Compaction — Project Guide
+# Session Relay — Project Guide
 
 ## What This Tool Does
 
@@ -33,11 +33,23 @@ The skill operates on a loop: assess scope → split into sessions → execute �
 
 ## Installation
 
-The skill is a single file. Copy it to your Claude Code skills directory:
+The skill is a single file. You can install it in one of three ways:
 
+**Claude Code Desktop app:** paste `install https://github.com/Andytoizer/session-relay` into a new chat. Claude fetches `skill/SKILL.md` and installs it to your skills directory automatically.
+
+**Terminal (clone):**
 ```bash
-mkdir -p ~/.claude/skills/session-handoff
-cp skill/SKILL.md ~/.claude/skills/session-handoff/SKILL.md
+git clone https://github.com/Andytoizer/session-relay
+cd session-relay
+mkdir -p ~/.claude/skills/session-relay
+cp skill/SKILL.md ~/.claude/skills/session-relay/SKILL.md
+```
+
+**Terminal (single-file curl):**
+```bash
+mkdir -p ~/.claude/skills/session-relay
+curl -o ~/.claude/skills/session-relay/SKILL.md \
+  https://raw.githubusercontent.com/Andytoizer/session-relay/main/skill/SKILL.md
 ```
 
 ## How It Works

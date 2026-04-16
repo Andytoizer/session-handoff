@@ -1,4 +1,4 @@
-# Session Handoff & Compaction
+# Session Relay
 
 Built by [Andy Toizer](https://www.linkedin.com/in/andy-toizer/) — I'm the head of growth at [Freckle.io](https://freckle.io) and write [AgentOperator](https://agentoperator.substack.com), a newsletter about what it actually looks like to build real systems with coding agents as a non-engineer.
 
@@ -90,24 +90,34 @@ Targeted outbound to 200 companies for Freckle...
 
 ## Install
 
-Copy the skill to your Claude Code skills directory:
+### Option A — Claude Code Desktop app (easiest)
+
+Open a new chat and paste this:
+
+```
+install https://github.com/Andytoizer/session-relay
+```
+
+Claude will fetch `skill/SKILL.md` from the repo and install it to your skills directory. Confirm when prompted. After that, the skill is active in every session — you don't need to reference it explicitly.
+
+### Option B — Terminal (clone + copy)
 
 ```bash
 # Clone the repo
-git clone https://github.com/andytoizer/session-handoff
-cd session-handoff
+git clone https://github.com/Andytoizer/session-relay
+cd session-relay
 
 # Copy to your skills directory
-mkdir -p ~/.claude/skills/session-handoff
-cp skill/SKILL.md ~/.claude/skills/session-handoff/SKILL.md
+mkdir -p ~/.claude/skills/session-relay
+cp skill/SKILL.md ~/.claude/skills/session-relay/SKILL.md
 ```
 
-Or if you just want the file:
+### Option C — Terminal (single-file curl)
 
 ```bash
-mkdir -p ~/.claude/skills/session-handoff
-curl -o ~/.claude/skills/session-handoff/SKILL.md \
-  https://raw.githubusercontent.com/andytoizer/session-handoff/main/skill/SKILL.md
+mkdir -p ~/.claude/skills/session-relay
+curl -o ~/.claude/skills/session-relay/SKILL.md \
+  https://raw.githubusercontent.com/Andytoizer/session-relay/main/skill/SKILL.md
 ```
 
 That's it. Claude Code will automatically use the skill when it detects a multi-session project.

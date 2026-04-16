@@ -1,9 +1,9 @@
 ---
-name: session-handoff
+name: session-relay
 description: "Manage multi-session projects by keeping context tight through compaction or session handoffs. Use this skill whenever: the user starts a large multi-step project, the user says 'let's split this up', you notice context is getting long on a complex task, you're approaching the end of a session with ongoing work, or the user asks to wrap up and continue later. Also trigger when you recognize a project will clearly need more than one session to complete — don't wait to be asked. Prefer compaction when continuing the same workflow; use session handoffs when pivoting to a distinct phase."
 ---
 
-# Session Handoff & Compaction
+# Session Relay
 
 You manage multi-session projects so that context is never lost — either by compacting within a session or handing off between sessions.
 
