@@ -101,6 +101,19 @@ At the end of every session (or when transitioning between phases):
 
 The README should be self-contained enough that a completely fresh Claude session can read it and know exactly what to do next.
 
+5. **Generate a ready-to-paste prompt** — Always end the handoff by giving the user a short, copy-pasteable prompt they can drop into the next session. The prompt should:
+   - Point to the project README path so the new session reads it first
+   - Include 1-2 sentences of context about what to do next
+   - Be short enough that the user doesn't need to edit it
+
+   Format it in a code block so it's easy to copy:
+
+   ```
+   Continue Phase 2 of [project name]. Read `path/to/README.md` for full context. Next step: [specific action].
+   ```
+
+   The user should never have to write the handoff prompt themselves — you generate it, they paste it.
+
 ### Phase 4: Session pickup
 
 When starting a new session on an existing project, the first thing to do is read the project README. It tells you:
