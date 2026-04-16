@@ -1,6 +1,6 @@
 # Session Handoff & Compaction
 
-Built by [Andy Toizer](https://www.linkedin.com/in/andy-toizer/) — I'm the head of growth at [Freckle.io](https://freckle.io) and write [Agent Operator](https://agentoperator.substack.com), a newsletter about what it actually looks like to build real systems with coding agents as a non-engineer.
+Built by [Andy Toizer](https://www.linkedin.com/in/andy-toizer/) — I'm the head of growth at [Freckle.io](https://freckle.io) and write [AgentOperator](https://agentoperator.substack.com), a newsletter about what it actually looks like to build real systems with coding agents as a non-engineer.
 
 **TLDR:** A Claude Code skill that keeps context tight across long projects — either by compacting within a session or handing off cleanly between sessions. It maintains a persistent README as the source of truth so no work gets lost.
 
