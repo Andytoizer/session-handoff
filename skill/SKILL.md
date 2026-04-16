@@ -82,23 +82,33 @@ The README.md must contain:
 **Next:** [what the next session should do first]
 ```
 
-### Phase 3a: Compaction (same workflow continues)
+### Phase 3: Choosing compact vs. new session
 
-When context is getting heavy but you're continuing the same phase:
+The key question: **does the next step benefit from what's in my head right now, or only from what's in the files?**
+
+**Compact** when:
+- You're iterating on the same work — refining, adjusting, re-running with tweaks (e.g., "let's adjust the scoring and re-run" or "search for more names at the missing companies")
+- The user gave feedback that shaped your approach and you haven't fully captured it in persistent files (preferences, edge cases, "don't do X" rules that are still just in the conversation)
+- You're mid-loop — going back and forth on something that isn't done yet
+- Tool state matters — you have file paths, data shapes, variable names, or patterns in context that would be tedious to re-derive from scratch
+- The next step is a continuation of the current workflow, not a new workflow
+
+**New session** when:
+- You're starting a genuinely different task that uses different tools and a different workflow (e.g., people search → email enrichment → personalization — these are distinct tasks)
+- Everything the next step needs is already captured in the README and data files — the conversation history adds nothing
+- The current context would actually be noise — hundreds of Apollo API responses, scoring iterations, and web search results that are irrelevant to the next phase
+- The next task has its own setup, its own iteration loop, and its own completion criteria
+
+**Rule of thumb:** If you could hand the README to a colleague and they'd know exactly what to do without asking you any questions, it's a new session. If they'd need to ask "wait, what did the user say about X?" then compact.
+
+### Phase 3a: Compaction
 
 1. **Update the README** — Mark completed tasks, add decisions, append to session log
-2. **Compact the conversation** — The compressed context + README should be sufficient to continue seamlessly
-3. **Continue working** — Pick up where you left off in the same session
+2. **Capture any uncaptured preferences** — If the user gave feedback that only lives in the conversation, write it to the README or a memory file before compacting
+3. **Compact the conversation** — The compressed context + README should be sufficient to continue seamlessly
+4. **Continue working** — Pick up where you left off in the same session
 
-Compaction is better than a handoff when:
-- You're mid-workflow (not at a natural stopping point)
-- The user gave feedback or preferences you'd lose in a cold handoff
-- Tool state and working context matter
-- The next step is a direct continuation, not a pivot
-
-### Phase 3b: Session handoff (pivoting to new phase)
-
-When you've completed a distinct phase and the next is genuinely different:
+### Phase 3b: Session handoff
 
 1. **Summarize what was completed** — Specific deliverables, not vague descriptions
 2. **Summarize what's next** — The first 2-3 concrete steps for the next session
