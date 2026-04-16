@@ -1,34 +1,26 @@
 ---
 name: session-handoff
-description: "Manage multi-session projects by splitting big tasks into focused sessions, maintaining a persistent project README, and generating clean handoff context for the next session. PROACTIVELY USE THIS SKILL — do not wait for the user to ask. Trigger it when: (1) the user describes a project with 3+ distinct phases or steps, (2) the task involves building something that will take multiple rounds of work (campaigns, pipelines, migrations, refactors, multi-file features), (3) you estimate the work will fill more than ~60% of a context window, (4) the user mentions anything like 'let's split this up', 'we'll continue later', 'next session', 'wrap up', 'pick this up tomorrow', 'save my progress', (5) you're deep into a session and realize the remaining work should be a fresh session, (6) the user starts a new session and references work from a previous conversation. The user may not know the project is big until they describe it — YOU should recognize it and propose the session structure. Err on the side of using this skill. A project that turns out to be smaller than expected loses nothing from having a README; a project that turns out bigger than expected loses everything without one."
+description: "Manage multi-session projects by keeping context tight through compaction or session handoffs. Use this skill whenever: the user starts a large multi-step project, the user says 'let's split this up', you notice context is getting long on a complex task, you're approaching the end of a session with ongoing work, or the user asks to wrap up and continue later. Also trigger when you recognize a project will clearly need more than one session to complete — don't wait to be asked. Prefer compaction when continuing the same workflow; use session handoffs when pivoting to a distinct phase."
 ---
 
-# Session Handoff
+# Session Handoff & Compaction
 
-You manage multi-session projects so that context is never lost between conversations.
+You manage multi-session projects so that context is never lost — either by compacting within a session or handing off between sessions.
 
-The core problem: when a big project spans multiple Claude sessions, each new session starts cold. Without structure, the user has to re-explain everything, decisions get lost, and work gets repeated. This skill prevents that by creating a persistent project state that any future session can read and immediately pick up where things left off.
+The core problem: when a big project spans multiple Claude sessions, each new session starts cold. Without structure, the user has to re-explain everything, decisions get lost, and work gets repeated. This skill prevents that through two mechanisms:
+
+1. **Compaction** — Compress the current conversation's context in place, preserving tool state and working memory. Best when continuing the same workflow.
+2. **Session handoff** — End the session cleanly, write a summary, and generate a pickup prompt. Best when pivoting to a distinct new phase.
 
 ## When to activate
 
-You should be the one to recognize that a project needs session management — the user won't always know upfront. Watch for these signals:
+Activate this skill in three situations:
 
-**During project planning:**
-- The user describes something with 3+ phases (e.g., "build a list, then find people, then write emails")
-- The task involves multiple tools, data sources, or sequential steps that build on each other
-- You estimate the full scope would fill more than half a context window
-- The task sounds like it'll take more than ~30 minutes of back-and-forth
+1. **Project planning** — When the user brings a task that will clearly take more than one session (multi-phase projects, large-scope work, anything with 3+ distinct phases). Proactively propose splitting into sessions. Don't wait for them to ask.
 
-**During execution:**
-- You've been working for a while and realize there's still a lot left
-- You're about to start a new phase that would benefit from a fresh context
-- The user says anything about continuing later, wrapping up, or picking up next time
+2. **Context getting heavy** — When the context window is filling up but you're still in the same phase of work. **Prefer compaction** here — it keeps conversational nuance (user feedback, refined preferences, edge cases discussed) that a cold handoff would lose.
 
-**At session start:**
-- The user references previous work ("remember that campaign we were building?")
-- Look for a project README in likely directories before asking the user to re-explain
-
-When in doubt, activate. The cost of creating a README for a project that didn't need one is near zero. The cost of NOT having one when you needed it is re-doing hours of work.
+3. **Phase transition** — When you've completed a distinct phase and the next phase is genuinely different work. **Use a session handoff** here — the clean break helps the next session start focused.
 
 ## How it works
 
@@ -90,29 +82,31 @@ The README.md must contain:
 **Next:** [what the next session should do first]
 ```
 
-### Phase 3: Session wrap-up
+### Phase 3a: Compaction (same workflow continues)
 
-At the end of every session (or when transitioning between phases):
+When context is getting heavy but you're continuing the same phase:
+
+1. **Update the README** — Mark completed tasks, add decisions, append to session log
+2. **Compact the conversation** — The compressed context + README should be sufficient to continue seamlessly
+3. **Continue working** — Pick up where you left off in the same session
+
+Compaction is better than a handoff when:
+- You're mid-workflow (not at a natural stopping point)
+- The user gave feedback or preferences you'd lose in a cold handoff
+- Tool state and working context matter
+- The next step is a direct continuation, not a pivot
+
+### Phase 3b: Session handoff (pivoting to new phase)
+
+When you've completed a distinct phase and the next is genuinely different:
 
 1. **Summarize what was completed** — Specific deliverables, not vague descriptions
 2. **Summarize what's next** — The first 2-3 concrete steps for the next session
 3. **Update the README** — Mark completed tasks, add any new decisions or open questions, append to the session log
 4. **Flag blockers** — If the next session needs something from the user (an API key, a decision, access to a tool), call it out explicitly
+5. **Generate a ready-to-paste prompt** — A short code block the user can copy into the next session
 
 The README should be self-contained enough that a completely fresh Claude session can read it and know exactly what to do next.
-
-5. **Generate a ready-to-paste prompt** — Always end the handoff by giving the user a short, copy-pasteable prompt they can drop into the next session. The prompt should:
-   - Point to the project README path so the new session reads it first
-   - Include 1-2 sentences of context about what to do next
-   - Be short enough that the user doesn't need to edit it
-
-   Format it in a code block so it's easy to copy:
-
-   ```
-   Continue Phase 2 of [project name]. Read `path/to/README.md` for full context. Next step: [specific action].
-   ```
-
-   The user should never have to write the handoff prompt themselves — you generate it, they paste it.
 
 ### Phase 4: Session pickup
 
@@ -145,7 +139,8 @@ The difference is specificity. The good handoff tells you exactly what files to 
 ## Key principles
 
 - **The README is the source of truth.** Not memory, not the conversation history, not a mental model. The README.
-- **Update before you close.** Never end a session without updating the README. This is non-negotiable.
+- **Update before you compact or close.** Never compact or end a session without updating the README first. This is non-negotiable.
+- **Prefer compaction over handoffs.** Compaction preserves nuance. Use handoffs only at natural phase boundaries.
 - **Be specific about what's next.** "Continue the project" is useless. "Run the EdTech company search with AI Ark lookalike seeded from ClassDojo, filter to 51+ employees, deduplicate against Apollo raw list" is useful.
 - **Decisions are permanent unless revisited.** If a previous session decided to use Tool X over Tool Y, the next session should respect that unless the user explicitly wants to reconsider.
-- **Don't over-split.** Not every project needs 10 sessions. If it can reasonably fit in 2-3, that's fine. The goal is focused sessions, not busywork.
+- **Don't over-split.** Not every project needs 10 sessions. If it can reasonably fit in 2-3 with compaction, that's better. The goal is focused context, not busywork.
